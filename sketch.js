@@ -38,9 +38,12 @@ function setup(){
 
     bird = new Bird(100,100);
 
-    log6 = new Log(230,180,80, PI/2);
-    chain = new Chain(bird.body,log6.body);
+    //log6 = new Log(230,180,80, PI/2);
+    //chain = new Chain(bird.body,log6.body);
+    //create an object of the constraint which attachs the bird to a particular point 
+    slingShot = new Slingshot(bird.body,{x:200,y:100});
 }
+
 
 function draw(){
     background(backgroundImg);
@@ -63,6 +66,17 @@ function draw(){
 
     bird.display();
     platform.display();
-    log6.display();
-    chain.display();    
+    //log6.display();
+    //chain.display();    
+    slingShot.display();
+}
+//mouse event functions, called automatically when the mouse is dragged or released
+//set position is inside matter.body,used to set the position of the body to a particular point 
+//set the bird's position to the mouse's position 
+function mouseDragged(){
+    Matter.Body.setPosition(bird.body,{x:mouseX,y:mouseY})
+}
+//make the bird fly,detach it from the constraint when the mouse is released 
+function mouseReleased(){
+    slingShot.fly()
 }
